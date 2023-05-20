@@ -64,3 +64,49 @@ let result = builder
     .get();
 
 console.log(result); // e
+
+//ES6 class
+class IntBuilder extends BaseBuilder {
+    constructor(value) {
+        super(value);
+    }
+
+    minus(...args) {
+        this.value -= args.reduce((accumulator, currentValue) => {
+            return accumulator + Number(currentValue);
+        }, 0);
+        return this;
+    }
+
+    multiply(n) {
+        this.value *= n;
+        return this;
+    }
+
+    divide(n) {
+        this.value = Math.floor(this.value / n);
+        return this;
+    }
+
+    mod(n) {
+        this.value = this.value % n;
+        return this;
+    }
+    static random(from, to) {
+        return Math.ceil(Math.random() * (to - from) + from);
+    }
+}
+
+const intBuilder = new IntBuilder(10);
+
+const resultInt = intBuilder
+    .plus(2, 3, 2)
+    .minus(1, 2)
+    .multiply(2)
+    .divide(4)
+    .mod(3)
+    .get();
+
+console.log(resultInt); // 1
+
+console.log(IntBuilder.random(10, 100));
